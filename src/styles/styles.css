@@ -1,31 +1,32 @@
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
 }
 
-body{
-  background-color: #333;
-  color: white;
-  width: 100vw;
-  min-height: 100vh; 
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+body {
+	background-color: #333;
+	color: white;
+	width: 100vw;
+	min-height: 100vh;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva,
+		Verdana, sans-serif;
 }
 
-a{
-  text-decoration: none;
+a {
+	text-decoration: none;
 }
 
-li{
-  list-style: none;
+li {
+	list-style: none;
 }
 
-button{
-  outline: none;
-  border: none;
-  background-color: transparent;
+button {
+	outline: none;
+	border: none;
+	background-color: transparent;
 }
-input{
-  outline: none;
-  border: none;
+input {
+	outline: none;
+	border: none;
 }
