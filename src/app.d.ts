@@ -2,7 +2,11 @@
 // for information about these interfaces
 // and what to do when importing types
 declare namespace App {
-	// interface Locals {}
+	interface Locals {
+		user? : {
+			username :string
+		}
+	}
 	// interface PageData {}
 	// interface Platform {}
 }
