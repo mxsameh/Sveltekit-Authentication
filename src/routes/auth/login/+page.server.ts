@@ -4,9 +4,10 @@
 
 import { DB_HOST } from "$env/static/private";
 import type { Action } from "@sveltejs/kit";
+import cookie from 'cookie'
 
 
-export const POST : Action = async ({ request, setHeaders }) =>
+export const POST : Action = async ({ request, setHeaders, url }) =>
 {
 
   // Get form data from request
@@ -41,17 +42,19 @@ export const POST : Action = async ({ request, setHeaders }) =>
   }
 
   // AUTHENTICATED
-  // setHeaders({
-  //   'Set-Cookie' : cookie.serialize('token',response.token,{
-  //     path : '/',
-  //     httpOnly : true,
-  //     sameSite : 'strict',
-  //     maxAge : 60 * 60 * 24 * 30,
-  //   })
-  // })
+  setHeaders({
+    'Set-Cookie' : cookie.serialize('token',response.token,{
+      path : '/',
+      httpOnly : true,
+      sameSite : 'strict',
+      maxAge : 60 * 60 * 24 * 30,
+    })
+  })
+
+  // console.log( url.searchParams.get('redirectTo') );
 
   return{
-    location : '/'
+    location : url.searchParams.get('redirectTo') || '/'
   }
 
 }

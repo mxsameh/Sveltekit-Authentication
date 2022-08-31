@@ -3,13 +3,16 @@
  -->
 
 
- <script lang="ts">
-import type { AwaitedErrors, HandleError } from "@sveltejs/kit";
+<script lang="ts">
 
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
 
-  export let errors : any; 
-
+  export let data: any; 
+  $:console.log( data );
+  export let errors : Error; 
   $:console.log( `errors: ${errors}` );
+
   let error : string;
 
   const login = async(e : any) =>
@@ -24,15 +27,18 @@ import type { AwaitedErrors, HandleError } from "@sveltejs/kit";
 
     })
     // .then(res => res.json())
-    console.log( response );
 
-    // if(response.errors.error){
-    //   error = response.errors.error
-    // }
+
+    if(!response.ok){
+      error = 'Incorrect username or password'
+    }else{
+      const path = $page.url.searchParams.get('redirectTo') || '/'  
+      goto(path)
+    }
 
     formEl.reset()
   }
- </script>
+</script>
 
  <h1 class="page__title">Login</h1>
 

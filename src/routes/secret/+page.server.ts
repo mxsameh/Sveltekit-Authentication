@@ -1,15 +1,17 @@
 import { redirect, type ServerLoad } from "@sveltejs/kit";
 
 
-export const load : ServerLoad = ({ locals }) =>
+export const load : ServerLoad = ({ locals, url, request }) =>
 {
-  // check if user is exist
-  // console.log( locals );
+
+  // CHECK IF USER IS LOGGED IN
   const user = locals.user
-  // 
+
+
+  // IF USER ISN'T LOGGED IN REDIRECT TO LOGIN PAGE
   if(!user)
   {
-    throw redirect(302, '/auth/login')
+    throw redirect(302, '/auth/login?redirectTo=/secret')
   }
 
   return{

@@ -3,9 +3,7 @@
 // and what to do when importing types
 declare namespace App {
 	interface Locals {
-		user? : {
-			username :string
-		}
+		user? : any ;
 	}
 	// interface PageData {}
 	// interface Platform {}
