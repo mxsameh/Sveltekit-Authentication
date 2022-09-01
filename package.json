@@ -9,13 +9,16 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"migrate:up" : "db-migrate up",
+		"migrate:down" : "db-migrate reset"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/cookie": "^0.5.1",
 		"@types/jsonwebtoken": "^8.5.9",
+		"@types/pg": "^8.6.5",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"eslint": "^8.16.0",
@@ -31,9 +34,11 @@
 		"typescript": "^4.7.4",
 		"vite": "^3.1.0-beta.1"
 	},
-	"type": "module",
 	"dependencies": {
 		"cookie": "^0.5.0",
-		"jsonwebtoken": "^8.5.1"
+		"db-migrate": "^0.11.13",
+		"db-migrate-pg": "^1.2.2",
+		"jsonwebtoken": "^8.5.1",
+		"pg": "^8.8.0"
 	}
 }

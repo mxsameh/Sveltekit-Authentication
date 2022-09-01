@@ -4,7 +4,7 @@
 
 import { COLOR, DB_HOST, TOKEN_SECRET } from '$env/static/private';
 import type { Action } from '@sveltejs/kit';
-import { createToken } from '../../../utils/jwt'
+import { createToken } from '$lib/utils/jwt'
 import cookie from 'cookie'
 
 export const POST: Action = async ({ request, setHeaders }) => {

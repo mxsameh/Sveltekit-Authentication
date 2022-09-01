@@ -1,6 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import cookie from 'cookie';
-import { decodeToken, verifyToken } from '../utils/jwt';
+import { decodeToken, verifyToken } from '$lib/utils/jwt';
 import { TOKEN_SECRET } from '$env/static/private';
 
 export const handle: Handle = async ({ event, resolve }) => {

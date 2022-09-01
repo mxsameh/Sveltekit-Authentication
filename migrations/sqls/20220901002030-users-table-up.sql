@@ -1,0 +1,9 @@
+-- CREATE TABLE USERS
+
+CREATE TABLE users (
+  id serial PRIMARY KEY,
+  username VARCHAR(100) UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  age INTEGER NOT NULL
+);
