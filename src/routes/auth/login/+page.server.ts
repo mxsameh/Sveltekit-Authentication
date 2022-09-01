@@ -2,11 +2,10 @@
  * LOGIN PAGE ENDPOINT
  */
 
-import { DB_HOST } from '$env/static/private';
 import type { Action } from '@sveltejs/kit';
 import cookie from 'cookie';
 
-export const POST: Action = async ({ request, setHeaders }) => {
+export const POST: Action = async ({ request, setHeaders, url }) => {
 
 	// Get form data from request
 	const form = await request.formData();
@@ -16,7 +15,7 @@ export const POST: Action = async ({ request, setHeaders }) => {
 	};
 
 	// check if user is in database
-	const response = await fetch(`${DB_HOST}/authenticate`, {
+	const authentication = await fetch(`${url.origin}/api/authenticate`, {
 		method: 'Post',
 		headers: {
 			'Content-Type': 'application/json'
@@ -25,19 +24,10 @@ export const POST: Action = async ({ request, setHeaders }) => {
 	})
 	.then((res) => res.json());
 
-	// UNAUTHENTICATED
-	if (!response.authenticated) {
-		return {
-			status: 403,
-			errors: {
-				username: 'Incorrect username or password'
-			}
-		};
-	}
 
-	// AUTHENTICATED
+	// SET RESPONSE HEADERS
 	setHeaders({
-		'Set-Cookie': cookie.serialize('token', response.token, {
+		'Set-Cookie': cookie.serialize('token', authentication.token, {
 			path: '/',
 			httpOnly: true,
 			sameSite: 'strict',
@@ -45,5 +35,14 @@ export const POST: Action = async ({ request, setHeaders }) => {
 		})
 	});
 
+	// UNAUTHENTICATED
+	if (!authentication.authenticated) {
+		return {
+			status: 403,
+			errors: {
+				username: 'Incorrect username or password'
+			}
+		};
+	}
 
 };

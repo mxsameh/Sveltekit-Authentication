@@ -48,6 +48,17 @@ import { goto } from "$app/navigation";
 		required
 	/>
 
+	<!-- AGE -->
+	<label class="form__label" for="age">AGE</label>
+	<input
+		class="form__input"
+		name="age"
+		type="text"
+		placeholder="Enter your age"
+		autocomplete="off"
+		required
+	/>
+
 	<!-- Username -->
 	<label class="form__label" for="username">username</label>
 	<input

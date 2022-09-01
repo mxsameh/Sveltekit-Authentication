@@ -2,25 +2,24 @@
  * REGISTRATION SERVER PAGE ENDPOINT
  */
 
-import { COLOR, DB_HOST, TOKEN_SECRET } from '$env/static/private';
 import type { Action } from '@sveltejs/kit';
-import { createToken } from '$lib/utils/jwt'
 import cookie from 'cookie'
 
-export const POST: Action = async ({ request, setHeaders }) => {
+export const POST: Action = async ({ request, setHeaders, url }) => {
 
 	const form = await request.formData();
 
 	// GET USER FROM REQUEST'S FORM
 	const user = {
-		name: form.get('name') as string,
 		username: form.get('username') as string,
 		password: form.get('password') as string,
-		admin: false
+		name: form.get('name') as string,
+		age : parseInt(form.get('age') as string) as number
+		// admin: false
 	};
 
 	// ADD USER TO DATABASE
-	const response = await fetch(`${DB_HOST}/users`, {
+	const response = await fetch(`${url.origin}/api/users`, {
 		method: 'POST',
 		body: JSON.stringify(user),
 		headers: {
@@ -39,10 +38,7 @@ export const POST: Action = async ({ request, setHeaders }) => {
 		}
 	}
 
-	const userData = await response.json();
-
-	// CREATE TOKEN
-	const token = createToken(userData, TOKEN_SECRET)
+	const token = await response.json();
 
 	// SET HEADER COOKIE
 	setHeaders({
