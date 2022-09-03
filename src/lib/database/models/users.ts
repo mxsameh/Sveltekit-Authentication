@@ -46,6 +46,18 @@ class UsersTable{
     return user
   }
 
+  // DELETE USER BY USERNAME
+  async deleteUser( username : string ) : Promise <User>
+  {
+
+      const conn = await db.connect()
+      const sql = `DELETE FROM users WHERE username = $1 RETURNING *`
+      const query = await conn.query(sql, [username])
+      const user = query.rows[0]
+
+      conn.release()
+      return user
+  }
 
 }
 

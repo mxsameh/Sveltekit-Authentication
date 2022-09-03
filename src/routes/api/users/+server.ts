@@ -6,26 +6,31 @@ import { TOKEN_SECRET } from "$env/static/private";
 
 const table = new UsersTable()
 
-export const GET : RequestHandler = async ({ setHeaders }) =>
+/**
+ *  GET ALL USERS 
+ * 
+ */
+export const GET : RequestHandler = async () =>
 {
 
   const users = await table.users()
   const data = JSON.stringify(users)
 
-  // setHeaders({
-  //   'Content-Type' : 'application/json'
-  // })
+    const response = new Response(data,{
+      status : 200,
+      headers : {
+        'Content-Type' : 'application/json'
+      }
+    })
 
-  const response = new Response(data,{
-    status : 200,
-    headers : {
-      'Content-Type' : 'application/json'
-    }
-  })
+    return response
 
-  return response
 }
 
+/**
+ * ADD A NEW USER
+ * 
+ */
 export const POST : RequestHandler = async ({ request }) =>
 {
   // GET USER FROM REQUEST
@@ -48,3 +53,57 @@ export const POST : RequestHandler = async ({ request }) =>
   return response
 }
 
+
+/**
+ * DELETE A USER FROM DATABASE 
+ */
+export const DELETE : RequestHandler = async ({ request }) =>
+{
+  let data;
+  try{
+    data = await request.json() 
+  }catch(err)
+  {
+    // throw new Error('please send username')
+    return new Response('please send username',{
+      status : 400
+    })
+  }
+  const username : string = data.username
+
+  const deletedUser = await table.deleteUser(username)
+
+  let response : Response;
+  let responseBody;
+  let responseData;
+
+  if(!deletedUser)
+  {
+    responseData = {
+      isDeleted : false,
+      error: 'username is not found'
+    }
+    responseBody = JSON.stringify(responseData)
+
+    response = new Response(responseBody,{
+      headers : {
+        'Content-Type' : 'application/json'
+      }
+    })
+    return response
+  }
+
+    responseData = {
+      isDeleted : true,
+      error: ''
+    }
+    responseBody = JSON.stringify(responseData)
+
+  response = new Response(responseBody,{
+    headers : {
+      'Content-Type' : 'application/json'
+    }
+  })
+
+  return response
+}
